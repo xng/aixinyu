@@ -2,8 +2,15 @@
 let can1, can2, ctx1, ctx2;
 let lastTime, deltaTime;
 let bgPic = new Image();
-let ane, fruit, mom, baby;
+let ane, fruit, mom, baby, data;
 let mx, my;
+let babyTail = [],
+    babyEye = [],
+    babyBody = [];
+let momTail = [],
+    momEye = [],
+    momBodyOra = [],
+    momBodyBlue = [];
 const canWidth = 800,
     canHeight = 600;
 document.body.onload = game;
@@ -33,9 +40,42 @@ function init() {
     baby.init();
     mx = canWidth * 0.5;
     my = canHeight * 0.5;
+    for (let i = 0; i < 8; i++) {
+        babyTail[i] = new Image();
+        babyTail[i].src = `./img/babyTail${i}.png`
+    }
+    for (let i = 0; i < 2; i++) {
+        babyEye[i] = new Image();
+        babyEye[i].src = `./img/babyEye${i}.png`
+    }
+    for (let i = 0; i < 20; i++) {
+        babyBody[i] = new Image();
+        babyBody[i].src = `./img/babyFade${i}.png`
+    }
+    for (let i = 0; i < 8; i++) {
+        momTail[i] = new Image();
+        momTail[i].src = `./img/bigTail${i}.png`
+    }
+    for (let i = 0; i < 2; i++) {
+        momEye[i] = new Image();
+        momEye[i].src = `./img/bigEye${i}.png`
+    }
+    for (let i = 0; i < 8; i++) {
+        momBodyBlue[i] = new Image();
+        momBodyBlue[i].src = `./img/bigSwimBlue${i}.png`;
+        momBodyOra[i] = new Image();
+        momBodyOra[i].src = `./img/bigSwim${i}.png`;
+    }
+    data = new dataObj();
+    ctx1.fillStyle = '#fff';
+    ctx1.font = '30px Verdana';
+    ctx1.textAlign = 'center';
 }
 
 function onMouseMove(e) {
+	if(data.gameOver){
+		return false;
+	}
     if (e.offSetX || e.layerX) {
         mx = e.offSetX == undefined ? e.layerX : e.offSetX;
         my = e.offSetY == undefined ? e.layerY : e.offSetY;
@@ -57,5 +97,7 @@ function gameloop() {
     ctx1.clearRect(0, 0, canWidth, canHeight)
     mom.draw();
     momFruitsCollision();
+    momBabyCollision();
     baby.draw();
+    data.draw();
 }
