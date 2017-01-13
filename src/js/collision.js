@@ -13,6 +13,7 @@ function momFruitsCollision() {
             if (fruit.fruitType[i] === 'blue') {
                 data.double = 2;
             }
+            wave.born(fruit.x[i], fruit.y[i]);
         }
     }
 }
@@ -20,8 +21,9 @@ function momFruitsCollision() {
 function momBabyCollision() {
     if (!data.gameOver && data.fruitNum > 0 && calLength2(mom.x, mom.y, baby.x, baby.y) < 900) {
         baby.babyBodyCount = 0;
-        data.addScore();
         mom.momBodyCount = 0;
+        data.addScore();
+        halo.born(baby.x, baby.y);
     }
 
 }

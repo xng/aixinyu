@@ -2,7 +2,7 @@
 let can1, can2, ctx1, ctx2;
 let lastTime, deltaTime;
 let bgPic = new Image();
-let ane, fruit, mom, baby, data;
+let ane, fruit, mom, baby, data, wave, halo,dust;
 let mx, my;
 let babyTail = [],
     babyEye = [],
@@ -11,6 +11,7 @@ let momTail = [],
     momEye = [],
     momBodyOra = [],
     momBodyBlue = [];
+let dustPic = [];
 const canWidth = 800,
     canHeight = 600;
 document.body.onload = game;
@@ -70,12 +71,22 @@ function init() {
     ctx1.fillStyle = '#fff';
     ctx1.font = '30px Verdana';
     ctx1.textAlign = 'center';
+    wave = new waveObj();
+    halo = new haloObj();
+    wave.init();
+    halo.init();
+    for (let i = 0; i < 7; i++) {
+        dustPic[i] = new Image();
+        dustPic[i].src = `./img/dust${i}.png`;
+    }
+    dust = new dustObj();
+    dust.init();
 }
 
 function onMouseMove(e) {
-	if(data.gameOver){
-		return false;
-	}
+    if (data.gameOver) {
+        return false;
+    }
     if (e.offSetX || e.layerX) {
         mx = e.offSetX == undefined ? e.layerX : e.offSetX;
         my = e.offSetY == undefined ? e.layerY : e.offSetY;
@@ -100,4 +111,7 @@ function gameloop() {
     momBabyCollision();
     baby.draw();
     data.draw();
+    wave.draw();
+    halo.draw();
+    dust.draw();
 }
