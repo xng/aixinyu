@@ -1,3 +1,4 @@
+'use strict'
 let aneObj = function() {
     this.x = [];
     this.len = [];
